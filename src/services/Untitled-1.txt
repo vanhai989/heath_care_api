@@ -1,0 +1,22 @@
+const _checkDayOfMonth = (array: AppointmentModel[]) => {
+    let newData = []
+    for (let i = 0; i < array.length; i++) {
+      let newitem = {
+        id: i + 3,
+        title: '',
+        content: []
+      }
+      const index = newData.findIndex(e => moment(array[i].appointment_date).format('YYYY-MM-DD') === moment(e.title).format('YYYY-MM-DD'))
+      if (index === -1) {
+        newitem.content.push(array[i])
+        newitem.title = array[i].appointment_date
+        for (let j = i + 1; j < array.length; j++) {
+          if (moment(array[i].appointment_date).format('YYYY-MM-DD') === moment(array[j].appointment_date).format('YYYY-MM-DD')) {
+            newitem.content.push(array[j])
+          }
+        }
+        newData = [...newData, newitem]
+      }
+    }
+    return newData;
+  }
